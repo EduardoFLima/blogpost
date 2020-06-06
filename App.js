@@ -1,19 +1,30 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import PostsScreen from './src/screens/PostsScreen';
+import PostDetailScreen from './src/screens/PostDetailScreen';
+import PostCreationScreen from './src/screens/PostCreationScreen';
+import PostEditScreen from './src/screens/PostEditScreen';
+import { Provider as BlogProvider } from './src/context/BlogContext';
 
-export default function App() {
+const stackNavigator = createStackNavigator({
+  Posts: PostsScreen,
+  PostDetail: PostDetailScreen,
+  PostCreation: PostCreationScreen,
+  PostEdit: PostEditScreen
+}, {
+  initialRouteName: 'Posts',
+  defaultNavigationOptions: {
+    title: 'List of posts'
+  }
+});
+
+const NavigatorContainer = createAppContainer(stackNavigator)
+
+export default () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <BlogProvider>
+      <NavigatorContainer />
+    </BlogProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
